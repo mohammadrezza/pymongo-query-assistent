@@ -13,6 +13,7 @@ class User(BaseModel):
         self.gender: UserGender = UserGender.Unknown
         self.img: str = ""
         self.last_login: str = ""
+        self.orders: list = []
 
     @staticmethod
     def get_collection_name():
