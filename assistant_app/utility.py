@@ -1,4 +1,6 @@
 from enum import Enum
+from flask import Response
+from flask_api import status
 
 
 def dump_class(cls, recursive=False, update_subclass=False):
@@ -72,3 +74,15 @@ def load_class(dict_data, class_type):
         except Exception as e:
             pass
     return final_class
+
+
+def api_exception_handler(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            # return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(response=e.__str__(), status=status.HTTP_400_BAD_REQUEST)
+
+    wrapper.__name__ = func.__name__
+    return wrapper
